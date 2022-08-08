@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+{% load static %}
+  <link rel="stylesheet" href="{% static 'custom_styles.css' %}">
+{% endblock %}
+
+
+{% block scripts %}
+{% load static %}
+<script type="text/javascript" src="{% static 'cart.js' %}"></script>
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="container-fluid bg-trasparent my-4 p-3" style="position: relative">
+  <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+    {% for item in items %}
+    {% if item.old_price %}
+    <div class="col hp">
+      <div class="card h-100 shadow-sm">
+        <a href="#">
+          <img src="{{ MEDIA_URL }}/{{ item.image }}" class="card-img-top" alt="product.title" />
+        </a>
+
+        <div class="label-top shadow-sm">
+          <a class="text-white" href="#">{{ item.category }}</a>
+        </div>
+        <div class="card-body">
+          <div class="clearfix mb-3">
+            <span class="float-start badge rounded-pill bg-success">{{ item.price }}₴</span>
+
+            {% if item.old_price %}
+              <span class="float-end"><a class="small text-muted text-uppercase aff-link">{{ item.old_price }}₴</a></span>
+            {% endif %}
+
+          </div>
+          <h5 class="card-title ml-1">
+            <a target="_blank" href="#">{{ item.title }}</a>
+          </h5>
+
+          <div class="d-grid gap-2 my-4">
+
+            <a href="#" data-product="{{ item.id }}" data-action="add" class="btn btn-warning bold-btn">add</a>
+
+          </div>
+
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Categories{% endblock %}
+
+
+
+
+{% block styles %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'custom_styles.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="container-fluid bg-trasparent my-4 p-3" style="position: relative">
+  <div class="row row-cols-1 row-cols-xs-6 row-cols-sm-2 row-cols-lg-4 g-3">
+    {% for category in categories %}
+    <div class="col hp">
+      <div class="card h-100 shadow-sm">
+        <a href="#">
+          <img src="{{ MEDIA_URL }}/{{ category.image }}" class="card-img-top" alt="product.title" />
+        </a>
+
+        <div class="card-body">
+
+
+          <div class="d-grid gap-2 my-4">
+
+            <a href="{% url 'categories_or_items_list' category.slug %}" class="btn btn-warning bold-btn">{{ category.name }}</a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+
+{% endblock %}
+
+
+
