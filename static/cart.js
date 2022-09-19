@@ -1,7 +1,5 @@
 var updateBtns = document.getElementsByClassName('bold-btn')
 
-console.log(updateBtns)
-console.log('length:', updateBtns.length)
 
 
 
@@ -11,7 +9,6 @@ for(var i = 0; i < updateBtns.length; i++){
     updateBtns[i].addEventListener('click', function(){
         var productID = this.dataset.product
         var action = this.dataset.action
-        console.log(productID)
         updateUserOrder(productID, action)
 
     })
@@ -20,7 +17,6 @@ for(var i = 0; i < updateBtns.length; i++){
 
 function updateUserOrder(productID, action){
     var url = '/update_item/'
-
     fetch(url, {
         method: 'POST',
         headers: {
@@ -30,13 +26,15 @@ function updateUserOrder(productID, action){
         },
         body:JSON.stringify({'productID': productID, 'action': action})
 
+
     })
 
     .then((response) =>{
         return response.json()
     })
-    .then((data) =>{
-        console.log('data', data)
-    })
 
-}
+    .then((data)=>{
+        location.reload()
+    })
+    }
+

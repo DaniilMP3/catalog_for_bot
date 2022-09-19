@@ -40,7 +40,7 @@ class Customer(models.Model):
     device = models.CharField(max_length=200, null=False, blank=False)
 
     def __str__(self):
-        return str(self.device)
+        return self.device
 
 
 class Order(models.Model):
@@ -49,9 +49,18 @@ class Order(models.Model):
     complete = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=100, null=True)
 
+    @property
+    def get_order_total(self):
+        order_items = self.orderitem_set.all()
+        return sum([item.get_item_total for item in order_items])
+
 
 class OrderItem(models.Model):
     product = models.ForeignKey(Item, on_delete=models.SET_NULL, blank=True, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
     quantity = models.IntegerField(default=0, null=True, blank=True)
     data_added = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def get_item_total(self):
+        return self.product.price * self.quantity
